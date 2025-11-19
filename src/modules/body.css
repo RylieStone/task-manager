@@ -8,10 +8,10 @@
     flex-direction: column;
 }
 .tasks {
+    overflow-y: auto;
     min-width: 100%;
 }
 .task-body {
-    overflow-y: auto;
     display: flex;
     margin: 10px;
     display: flex;
