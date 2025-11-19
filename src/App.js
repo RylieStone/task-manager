@@ -3,11 +3,10 @@ import { useState, useEffect } from 'react';
 import Body from "./modules/body"
 import axios from 'axios'
 import './App.css';
-let uptasks = [{id: 1, title: "homework", status: false, created: '11:30'}, {id: 2, title: "coding", status: false, created: '11:11'}, {id: 3, title: "dishes", status: true, created: '11:35'}]
 function App() {
   useEffect(() => {
     // add axios
-    setTasks(uptasks)
+    setTasks()
   }, [])
   const [tasks, setTasks] = useState([])
   const change = (id) => {
