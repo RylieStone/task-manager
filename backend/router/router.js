@@ -1,44 +1,47 @@
 const express = require('express')
-const {create, login, updateLover, message} = require('./model')
-const {checkreg, usernamecheck, passwordforupdate, restricted} = require('./middleware')
+const { create, get, update, del } = require('./model')
 const router = express.Router()
 
-router.post('/register', checkreg, async (req, res) => {
-    const {username, password} = req.body
-    const user = await create({username, password})
+router.post('/tasks', async (req, res) => {
     try {
-        res.status(201).json(user)
-    } catch {
-        res.status(422).json({message: 'please try again'})
+        const { title, status, created } = req.body
+        const task = await create({ title, status, created })
+        res.status(201).json(task)
+    } catch (err) {
+        res.status(422).json({ message: 'please try again' })
     }
 })
 
-router.post('/login', usernamecheck, async (req, res) => {
-    const {username, password} = req.body
-    const user = await login({username, password})
+// GET ALL TASKS
+router.get('/tasks', async (req, res) => {
     try {
-        if (user.token) {
-            res.status(200).json(user)
-        } else {
-            res.status(422).json(user)
-        }
+        const tasks = await get()
+        res.status(200).json(tasks)
     } catch {
-        res.status(422).json({message: 'please try again'})
+        res.status(422).json({ message: 'please try again' })
     }
 })
 
-router.post('/secret', passwordforupdate, async (req, res) => {
-const user = req.body.username
-const message = await updateLover({username: user})
-try {
-    res.status(200).json(message)
-} catch {
-    res.status(422).json({message: 'please try again'})
-}
+// UPDATE TASK
+router.patch('/tasks/:id', async (req, res) => {
+    try {
+        const id = req.params.id
+        const { status } = req.body
+        const msg = await update({ id, status })
+        res.status(200).json(msg)
+    } catch {
+        res.status(422).json({ message: 'please try again' })
+    }
 })
 
-router.get('/', restricted, async (req, res) => {
-    const data = await message({username: req.decoded.username})
-    res.status(200).json(data)
+router.delete('/tasks/:id', async (req, res) => {
+    try {
+        const id = req.params.id
+        await del(id)
+        res.status(201).json('deleted')
+    } catch (err) {
+        res.status(422).json({ message: 'please try again' })
+    }
 })
+
 module.exports = router
