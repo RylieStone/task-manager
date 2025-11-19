@@ -6,7 +6,7 @@ function Body(props) {
     const [filter, changeFilter] = useState(0) // ultilizes filters spot on the array
     const [taskName, edit] = useState("") // for inputting new tasks
     const onChange = (evt) => {
-        edit(evt.target.data)
+        edit(evt.target.value)
     }
     const onSubmit = (evt) => { // creates the new task and submits it to the api
     evt.preventDefault()
@@ -44,7 +44,7 @@ function Body(props) {
             <label children='Enter task:'></label>
                 <input
                 maxLength={20}
-                value={task}
+                value={taskName}
                 onChange={onChange}
                 placeholder="Enter task"
                 id="task"/>
