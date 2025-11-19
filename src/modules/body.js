@@ -16,7 +16,7 @@ function Body(props) {
     <div className="body">
 
       <div className='task-body'>
-        <button className="filter" onClick={() => changeFil}>Filtering by: {filters[filter]}</button>
+        <button className="filter" onClick={changeFil}>Filtering by: {filters[filter]}</button>
         {tasks.length >= 1 ? filtered.map((task) => {
             return <div className="card">
             <div className="card-header" key={task.id}>
