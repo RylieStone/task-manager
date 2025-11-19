@@ -24,10 +24,11 @@ function Body(props) {
     const filtered = filters[filter] === 'All' ? tasks : tasks.filter((task) => task.status === (filters[filter] === 'Completed'))
   return (
     <div className="body">
-
+        
       <div className='task-body'>
         <button className="filter" onClick={changeFil}>Filtering by: {filters[filter]}</button>
-        {tasks.length >= 1 ? filtered.map((task) => {
+        <div className="tasks">
+            {tasks.length >= 1 ? filtered.map((task) => {
             return <div className="card">
             <div className="card-header" key={task.id}>
                 <h2>{task.title}</h2>
@@ -40,6 +41,8 @@ function Body(props) {
             </div>
             </div>
         }) : <h1>create some tasks for them to be listed here!</h1>}
+        </div>
+        <div>
         <form className="task-creator" onSubmit={onSubmit}>
             <label children='Enter task:'></label>
                 <input
@@ -50,6 +53,7 @@ function Body(props) {
                 id="task"/>
             <button type='submit'>create</button>
         </form>
+        </div>
       </div>
 
     </div>
