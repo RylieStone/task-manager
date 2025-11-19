@@ -3,8 +3,18 @@ import { useState } from "react";
 const filters = ['All', 'Pending', 'Completed']
 function Body(props) {
     const tasks = props.tasks
-    const [filter, changeFilter] = useState(0)
-    const changeFil = () => {
+    const [filter, changeFilter] = useState(0) // ultilizes filters spot on the array
+    const [taskName, edit] = useState("") // for inputting new tasks
+    const onChange = (evt) => {
+        edit(evt.target.data)
+    }
+    const onSubmit = (evt) => { // creates the new task and submits it to the api
+    evt.preventDefault()
+    let task = {id: tasks.length+1, title: taskName, status: false, created: Date.now()}
+    props.setTasks([...tasks, task])
+    // add axios
+  }
+    const changeFil = () => { // changes filter
         if (filter +1 >= filters.length) {
             changeFilter(0)
         } else {
@@ -30,6 +40,16 @@ function Body(props) {
             </div>
             </div>
         }) : <h1>create some tasks for them to be listed here!</h1>}
+        <form className="task-creator" onSubmit={onSubmit}>
+            <label children='Enter task:'></label>
+                <input
+                maxLength={20}
+                value={task}
+                onChange={onChange}
+                placeholder="Enter task"
+                id="task"/>
+            <button type='submit'>create</button>
+        </form>
       </div>
 
     </div>
