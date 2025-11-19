@@ -10,8 +10,8 @@ function App() {
   }, [])
   const [tasks, setTasks] = useState([])
   const change = (id) => {
-    console.log('ran')
-    console.log(uptasks.find((task) => task.id === id))
+    let newTasks = tasks.map((task) => task.id === id ? {...task, status: !task.status} : task)
+    setTasks(newTasks)
   }
   const del = (id) => {
 
