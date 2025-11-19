@@ -4,11 +4,13 @@ const filters = ['All', 'Pending', 'Completed']
 function Body(props) {
     const tasks = props.tasks
     const [filter, useFilter] = useState(0)
+    const filtered = filter === 'All' ? tasks : tasks.filter((task) => task.status === filter)
+    console.log(filtered)
   return (
     <div className="body">
 
       <div className='task-body'>
-        {tasks.length >= 1 ? tasks.map((task) => {
+        {tasks.length >= 1 ? filtered.map((task) => {
             return <div className="card">
             <div className="card-header" id={task.id}>
                 <h2>{task.title}</h2>
