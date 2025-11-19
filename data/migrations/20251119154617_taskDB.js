@@ -7,7 +7,7 @@ exports.up = async function(knex) {
     table.increments('task_id')
     table.string('title').notNullable().unique()
     table.boolean('status').notNullable()
-    table.string('created-at').notNullable()
+    table.string('created_at').notNullable()
   })
 };
 
