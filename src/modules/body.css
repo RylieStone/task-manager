@@ -1,3 +1,5 @@
+
+
 .body {
     display: flex;
     align-self: center;
@@ -9,12 +11,33 @@
     display: flex;
     margin: 10px;
     display: flex;
-    align-self: center;
     align-items: center;
-    justify-content: center;
+    align-self: center;
     flex-direction: column;
     border-radius: 4%;
     background-color: grey;
     min-height: 500px;
     min-width: 80%;
+}
+.card {
+    min-height: 120px;
+    margin: 8px;
+    border-radius: 15px;
+    background-color: lightgray;
+    width: 95%;
+    margin-bottom: 0%;
+    h5 {
+        margin: 0px;
+        margin-left: 10px;
+    };
+    * {
+        margin: 5px;
+    }
+}
+.card-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between; /* pushes them to opposite sides */
+    align-items: center;
+    margin-bottom: 0px;
 }
