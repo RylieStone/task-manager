@@ -9,13 +9,19 @@ function App() {
     setTasks(uptasks)
   }, [])
   const [tasks, setTasks] = useState([])
+  const change = (id) => {
+
+  }
+  const del = (id) => {
+
+  }
   return (
     <div className="App">
       <header className="App-header">
         <h2>Task Manager</h2>
       </header>
 
-      <Body tasks={tasks}/>
+      <Body tasks={tasks} change={change} del={del}/>
 
     </div>
   );
