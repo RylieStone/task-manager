@@ -14,7 +14,8 @@ function App() {
     setTasks(newTasks)
   }
   const del = (id) => {
-
+    let newTasks = tasks.filter((task) => task.id !== id)
+    setTasks(newTasks)
   }
   return (
     <div className="App">
