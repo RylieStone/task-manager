@@ -33,7 +33,7 @@ function Body(props) {
                 <h2>{task.title}</h2>
                 <h3>{task.status ? "completed" : "pending"}</h3>
             </div>
-            <h5>{task.created}</h5>
+            <h5>{new Date(task.created).toLocaleString()}</h5>
             <div className="card-footer"> 
                 <button className="change" onClick={() => props.change(task.id)}>Change Status</button>
                 <button className="delete" onClick={() => props.del(task.id)}>Delete</button>
