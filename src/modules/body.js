@@ -1,18 +1,31 @@
 import "./body.css"
 import { useState } from "react";
+import axios from "axios";
 const filters = ['All', 'Pending', 'Completed']
 function Body(props) {
     const tasks = props.tasks
     const [filter, changeFilter] = useState(0) // ultilizes filters spot on the array
     const [taskName, edit] = useState("") // for inputting new tasks
+    const [error, setError] = useState("");
     const onChange = (evt) => {
         edit(evt.target.value)
     }
-    const onSubmit = (evt) => { // creates the new task and submits it to the api
+    const onSubmit = async (evt) => { // creates the new task and submits it to the api
     evt.preventDefault()
-    let task = {id: tasks.length+1, title: taskName, status: false, created: Date.now()}
-    props.setTasks([...tasks, task])
-    // add axios
+     setError(""); // clear previous errors
+
+    // Check if title already exists
+    const exists = tasks.some(t => t.title.toLowerCase() === taskName.toLowerCase());
+    if (exists) {
+        setError("A task with this name already exists.");
+        return; // stop submission
+    }
+
+    let task = {id: tasks.length+1, title: taskName, status: false, created: new Date().toLocaleString()}
+    await axios.post('http://localhost:9000/tasks', task).then(() => {
+      props.setTasks([...tasks, task])
+      edit('')
+    }).catch(err => console.log(err))
   }
     const changeFil = () => { // changes filter
         if (filter +1 >= filters.length) {
@@ -34,9 +47,9 @@ function Body(props) {
                 <h2>{task.title}</h2>
                 <h3>{task.status ? "completed" : "pending"}</h3>
             </div>
-            <h5>{new Date(task.created).toLocaleString()}</h5>
+            <h5>{task.created}</h5>
             <div className="card-footer"> 
-                <button className="change" onClick={() => props.change(task.id)}>Change Status</button>
+                <button className="change" onClick={() => props.change(task)}>Change Status</button>
                 <button className="delete" onClick={() => props.del(task.id)}>Delete</button>
             </div>
             </div>
@@ -44,6 +57,8 @@ function Body(props) {
         </div>
         <div>
         <form className="task-creator" onSubmit={onSubmit}>
+          {error && <p className="error">{error}</p>}
+
             <label children='Enter task:'></label>
                 <input
                 maxLength={20}
